@@ -20,7 +20,8 @@ export default function ChartMainWrapper({invoices}) {
 
     const handleClick = (selected) => {
         
-        setTimeframe(selected)
+        setTimeframe(selected),
+        console.log('hi')
     }
 
     const getDaysInWeek = () => {
