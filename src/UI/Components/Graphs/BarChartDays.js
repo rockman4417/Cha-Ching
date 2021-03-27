@@ -9,7 +9,7 @@ const VerticalBar = ({handleClick, daysInWeek, totalsForWeek}) => {
         labels: daysInWeek,
         datasets: [
           {
-            label: '# of Votes',
+            label: 'Money made this week:',
             data: totalsForWeek,
             backgroundColor: 'rgb(208, 255, 211)',
             borderColor: 'rgba(153, 255, 153, 0.8)',
