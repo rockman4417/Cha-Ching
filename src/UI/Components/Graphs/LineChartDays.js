@@ -15,7 +15,7 @@ export default function LineChart ({handleClick, daysInWeek, totalsForWeek}) {
     labels: daysInWeek,
     datasets: [
       {
-        label: 'Money made this week:' + ' $' +totalsForWeek[totalsForWeek.length-1],
+        label: 'Money made this week:',
         data: totalsForWeek,
         fill: true,
         backgroundColor: 'rgb(208, 255, 211)',

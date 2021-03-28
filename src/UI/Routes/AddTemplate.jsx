@@ -1,75 +1,3 @@
-// import React, { useState } from "react";
-// import { useFirestore } from "react-redux-firebase";
-// import { useSelector } from "react-redux";
-
-
-// const AddTodo = () => {
-//   const [presentClient, setClient] = useState("");
-//   const firestore = useFirestore();
-//   const { uid } = useSelector((state) => state.firebase.auth);
-//   const handleChange = ({ currentTarget: { name, value } }) => {
-//     if (name === "addClient") {
-//       setPresentClient(value);
-//     }
-//   };
-//   const addNewClient = (todo) => {
-//     firestore
-//       .collection("users")
-//       .doc(uid)
-//       .collection("clients")
-//       .add({
-//         first_name: '',
-//         last_name: '',
-//         business_name: '',
-//         address: '',
-//         city: '',
-//         state: '',
-//         zip: '',
-//         phone1: '',
-//         cell: '',
-//         email: ''
-//       })
-//       .then((docRef) => {
-//         docRef.update({
-//           todoID: docRef.id,
-//         });
-//       });
-//     setPresentClient("");
-//   };
-//   return (
-//     <div>
-//       <form action="">
-//         <input
-//           type="text"
-//           name="addClient"
-//           value={presentClient}
-//           onChange={handleChange}
-//         />
-//         <button
-//           onClick={(event) => {
-//             event.preventDefault();
-//             addNewClient(presentClient);
-//           }}
-//         >
-//           Add Client
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-// export default AddTodo;
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { Component, Fragment, useState, useEffect } from 'react'
 import {
     Button,
@@ -83,6 +11,7 @@ import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
+import Typography from '@material-ui/core/Typography';
 
 
 
@@ -150,7 +79,8 @@ const AddClient = (props) => {
    
         return (
             
-                            <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: '200px'}}>
+                                <Typography>Add your custom work template.  For example you might charge $50 to mow a lawn.</Typography>
                                 <div style={{display: 'flex', alignItems: 'flex-start', marginTop: '100px'}}>
                                 <form 
                                 onSubmit={handleSubmit}
@@ -165,6 +95,7 @@ const AddClient = (props) => {
                                     id="template_amount" 
                                     placeholder="Amount" 
                                     value={template.template_amount} 
+                                    type="number"
                                     onChange={handleTextChange} 
                                     required />
                                 <TextField 

@@ -24,6 +24,8 @@ import Box from '@material-ui/core/Box';
 import moment from 'moment'
 
 
+
+
 // const checkAuth = () => {
 //     const cookies = cookie.parse(document.cookie)
 //     console.log('looking up cookies')
@@ -35,14 +37,20 @@ const ClientList = (props) => {
     const [open, setOpen] = React.useState(false);
 
     const { displayName, uid } = useSelector((state) => state.firebase.auth);
-        useFirestoreConnect({
+        useFirestoreConnect([{
             collection: `users/${uid}/invoices`,
             storeAs: "invoices",
-        });
+        },
+        {
+          collection: `users`,
+          doc: uid,
+          storeAs: "user"
+          },]);
 
 
 
     const invoices = useSelector((state) => state.firestore.data.invoices);
+    const user = useSelector((state) => state.firestore.data.user);
      console.log('invoices', invoices);
 
      const firestore = useFirestore();
@@ -76,7 +84,7 @@ const ClientList = (props) => {
                     <TableRow key={idx}>
                         <TableCell>
                             
-                            <Link to={`/details/invoice/${invoice.invoiceID}`} style={{ textDecoration: 'none' }}>{moment(invoice.date.seconds *1000).format("dddd, MMMM Do YYYY")}</Link>
+                            <Link to={{pathname: `/details/invoice/${invoice.invoiceID}`, state: {invoiceData: invoice, user}}} style={{ textDecoration: 'none' }}>{moment(invoice.date.seconds *1000).format("dddd, MMMM Do YYYY")}</Link>
                             
                             </TableCell>
                         <TableCell>{"$" + invoice["total"]}</TableCell>

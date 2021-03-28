@@ -90,7 +90,8 @@ useEffect(()=> {
 
 return(
     client ? (
-<Card className={classes.root} style={{margin: '10px'}}>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+          <Card className={classes.root} style={{margin: '10px', width: '400px'}}>
                 <Link to="/clients" ><button>BACK</button></Link>
               <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -109,10 +110,11 @@ return(
                 </Typography> 
               </CardContent>
               <CardActions>
-                <Button size="small">VIEW MORE</Button>
+                {/* <Button size="small">VIEW MORE</Button> */}
               </CardActions>
               <DeleteIcon onClick={() => handleDelete(client.clientID)} className="icon text-red" />
-            </Card>
+           </Card>
+      </div>
             
 
 

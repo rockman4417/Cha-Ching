@@ -178,6 +178,7 @@ export default function ChartMainWrapper({invoices}) {
     return (
 
         
+        
         invoices && <div style={{marginTop: '20px'}}>
                         <div className='header'>
                             <Typography variant="h4" component="h3" style={{marginBottom: '20px'}} color='primary'>

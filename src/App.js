@@ -17,6 +17,9 @@ import Test from "./UI/Components/Test"
 import EditClient from './UI/Routes/EditClient'
 import EditTemplate from './UI/Routes/EditTemplate'
 import './App.css'
+import Lab from './UI/Routes/Lab'
+import AddReceipt from './UI/Routes/Receipts/AddReceipt'
+import ReceiptList from './UI/Routes/Receipts/ReceiptList'
 
 
 function App() {
@@ -34,6 +37,12 @@ function App() {
           <DashboardWrapper/>
         </PrivateRoute>
 
+        <Route path='/lab' component={Lab} />
+
+        <Route path = "/receipts" component={ReceiptList} />
+        <Route path = "/addreceipt" component={AddReceipt} />
+
+      
         <Route path='/details/client/:id' component={ClientDetails} />
         <Route path='/details/template/:id' component={TemplateDetails} />
         <Route path='/details/invoice/:id' component={InvoiceDetails} />
