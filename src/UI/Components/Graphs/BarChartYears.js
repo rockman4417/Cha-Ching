@@ -9,7 +9,7 @@ const VerticalBar = ({handleClick, monthsInYear, totalsForYear}) => {
         labels: monthsInYear,
         datasets: [
           {
-            label: '# of Votes',
+            label: 'Money made this year:',
             data: totalsForYear,
             backgroundColor: 'rgb(208, 255, 211)',
             borderColor: 'rgba(153, 255, 153, 0.8)',

@@ -13,7 +13,7 @@ export default function LineChart({handleClick, monthsInYear, totalsForYear}) {
     labels: monthsInYear,
     datasets: [
       {
-        label: 'Money made this year:' + ' $' + totalsForYear[totalsForYear.length-1],
+        label: 'Money made this year:',
         data: totalsForYear,
         fill: true,
         backgroundColor: 'rgb(208, 255, 211)',

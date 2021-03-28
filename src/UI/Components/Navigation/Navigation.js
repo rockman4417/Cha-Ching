@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import { isEmpty, isLoaded } from 'react-redux-firebase';
-
+import { useFirebase } from "react-redux-firebase";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -15,6 +16,19 @@ const Navigation = (props) => {
 
     let { displayName, uid } = useSelector((state) => state.firebase.auth)
     
+  const firebase = useFirebase();
+  const history = useHistory();
+
+  const signInWithGoogle = () => {
+    firebase
+      .login({
+        provider: "google",
+        type: "popup",
+      })
+      .then(() => {
+        history.push("/dashboard");
+      });
+  };
     
 
     useEffect(()=>{console.log('uid', displayName)}, [])
@@ -41,9 +55,9 @@ if(isEmpty(uid)) {
            <AppBar position="relative" >
            <Toolbar >
               
-               <Typography variant="h6" style={{ flexGrow: "1", paddingLeft: '800px' }}>
+               <Typography variant="h6" style={{ flexGrow: "1", paddingLeft: '100px' }}>
                    
-                   GET PAID APP
+                   CHA - CHING!
                    
                    
                </Typography>
@@ -54,11 +68,11 @@ if(isEmpty(uid)) {
            
                    </li>  
                    
-                   <li className="nav-list-item" style={{display: 'flex'}}>
+                   {/* <li className="nav-list-item" style={{display: 'flex'}}>
                        <Link to="/dashboard"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Dashboard</Button></Link>
-                   </li>
+                   </li> */}
                    <li className="nav-list-item" style={{display: 'flex'}}>
-                       <Link to="/" onClick={logout} style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Login</Button></Link>
+                       <Link to="/" onClick={signInWithGoogle} style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Login</Button></Link>
                    </li>
                </ul>
            </Toolbar>
@@ -77,10 +91,10 @@ if(isLoaded(uid)) {
     <div>
        
            <AppBar position="relative" >
-           <Toolbar style={{marginLeft: '230px'}}>
+           <Toolbar style={{marginLeft: '292px'}}>
                
                <Typography variant="h6" style={{ flexGrow: "1" }}>
-                   GET PAID APP
+                   CHA - CHING!
                </Typography>
                <ul className="nav-list" style={{listStyleType: "none", display: "flex"}}>
                    
@@ -93,6 +107,9 @@ if(isLoaded(uid)) {
                   
                    <li className="nav-list-item" style={{display: 'flex'}}>
                        <Link to="/dashboard"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Dashboard</Button></Link>
+                   </li>
+                   <li className="nav-list-item" style={{display: 'flex'}}>
+                       <Link to="/lab"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Lab</Button></Link>
                    </li>
                    <li className="nav-list-item" style={{display: 'flex'}}>
                        <Link to="/" onClick={logout} style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Logout</Button></Link>

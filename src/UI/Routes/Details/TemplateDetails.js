@@ -52,27 +52,32 @@ export default function SimpleCard(props) {
   return (
 
     template? (
-        <Card className={classes.root} style={{margin: '10px'}}>
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          TEMPLATE
-        </Typography>
-        <Typography variant="h5" component="h2">
-          {template.template_name}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-        {template.template_amount}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {template.template_description}
-          <br />
-          
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">VIEW MORE</Button>
-      </CardActions>
-    </Card>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Card className={classes.root} style={{margin: '10px', width: '600px', height: '300px'}}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    TEMPLATE
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    {template.template_name}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+                  {template.template_amount}
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    {template.template_description}
+                    <br />
+                    
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {/* <Button size="small">VIEW MORE</Button> */}
+                </CardActions>
+             </Card>
+
+
+    </div>
+    
     ) : <div>Hi</div>
     
   );
