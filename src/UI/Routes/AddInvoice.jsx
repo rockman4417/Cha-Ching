@@ -136,7 +136,7 @@ const AddInvoice = (props) => {
     const [templateNames, setTemplateNames] = useState([])
     const { uid } = useSelector((state) => state.firebase.auth);
     const [checkedToEmail, setCheckedToEmail] = useState(false)
-    
+    console.log("sdfsdf")
 
     /////////////////////Stepper Functions//////////////////////////////////////////////////////////
     const [activeStep, setActiveStep] = React.useState(0);
