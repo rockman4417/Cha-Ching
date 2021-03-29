@@ -4,21 +4,43 @@ import { AppBar, Toolbar,
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
-import { isEmpty, isLoaded } from 'react-redux-firebase';
+import { isEmpty, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useFirebase } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
+import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const avatarStyles = {
+    "hover": {
+        cursor: 'pointer'
+      },
+}
 
 
 
 const Navigation = (props) => {
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
     
     
 
-    let { displayName, uid } = useSelector((state) => state.firebase.auth)
+  let { displayName, uid, photoURL } = useSelector((state) => state.firebase.auth)
+  console.log("useSelector", useSelector((state) => state.firebase.auth))
     
   const firebase = useFirebase();
   const history = useHistory();
-
+  
+  
+  
   const signInWithGoogle = () => {
     firebase
       .login({
@@ -85,18 +107,21 @@ if(isEmpty(uid)) {
 
 
 if(isLoaded(uid)) {
+    
 
   return (
 
     <div>
-       
+            
            <AppBar position="relative" >
-           <Toolbar style={{marginLeft: '451px'}}>
+           <Toolbar style={{marginLeft: '443px'}}>
                
                <Typography variant="h6" style={{ flexGrow: "1" }}>
                    CHA - CHING!
                </Typography>
-               <ul className="nav-list" style={{listStyleType: "none", display: "flex"}}>
+               <ul className="nav-list" style={{listStyleType: "none", display: "flex", marginRight:"30px"}}>
+
+                      
                    
                     <li className="nav-list-item" style={{display: 'flex'}}>
                     <Link to="/feedback"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Feedback</Button></Link>
@@ -114,7 +139,16 @@ if(isLoaded(uid)) {
                        <Link to="/lab"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Lab</Button></Link>
                    </li>
                    <li className="nav-list-item" style={{display: 'flex'}}>
-                       <Link to="/" onClick={logout} style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Logout</Button></Link>
+                       <Avatar alt="Remy Sharp" src={photoURL} onClick={handleClick} style={{avatarStyles}}/>
+                       <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <Link to="/" onClick={logout} style={{ textDecoration: 'none'}}><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
+                        </Menu>
                    </li>
                </ul>
            </Toolbar>
