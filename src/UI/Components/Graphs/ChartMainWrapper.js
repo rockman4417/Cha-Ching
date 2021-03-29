@@ -298,11 +298,11 @@ export default function ChartMainWrapper({invoices, clients, templates}) {
                                                         </div>}
                                 
                                 <div className='links' style={{marginRight: '15px', marginLeft: '13px'}}>
-                                        {timeframe === 'days' ? <Button style={{margin: '5px'}} disabled color="primary" variant='outlined'>This Week</Button> 
+                                        {timeframe === 'days' ? <Button style={{margin: '5px'}} color="primary" variant='outlined'>This Week</Button> 
                                         : <Button style={{margin: '5px'}} color="primary" onClick={()=>handleClick('days')}>This Week</Button>}
-                                        {timeframe === 'months' ? <Button style={{margin: '5px'}} disabled color="primary" variant='outlined'>This Month</Button> 
+                                        {timeframe === 'months' ? <Button style={{margin: '5px'}} color="primary" variant='outlined'>This Month</Button> 
                                         : <Button style={{margin: '5px'}} color="primary" onClick={()=>handleClick('months')}>This Month</Button>}
-                                        {timeframe === 'years' ? <Button style={{margin: '5px'}} disabled color="primary" variant='outlined'>This Year</Button> 
+                                        {timeframe === 'years' ? <Button style={{margin: '5px'}} color="primary" variant='outlined'>This Year</Button> 
                                         : <Button style={{margin: '5px'}} color="primary" onClick={()=>handleClick('years')}>This Year</Button>}
                                         
                                 </div>
