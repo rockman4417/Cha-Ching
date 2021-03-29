@@ -18,6 +18,8 @@ import EditClient from './UI/Routes/EditClient'
 import EditTemplate from './UI/Routes/EditTemplate'
 import './App.css'
 import Lab from './UI/Routes/Lab'
+import About from './UI/Routes/About'
+import Feedback from './UI/Routes/Feedback'
 import AddReceipt from './UI/Routes/Receipts/AddReceipt'
 import ReceiptList from './UI/Routes/Receipts/ReceiptList'
 
@@ -38,6 +40,8 @@ function App() {
         </PrivateRoute>
 
         <Route path='/lab' component={Lab} />
+        <Route path='/about' component={About} />
+        <Route path='/feedback' component={Feedback} />
 
         <Route path = "/receipts" component={ReceiptList} />
         <Route path = "/addreceipt" component={AddReceipt} />

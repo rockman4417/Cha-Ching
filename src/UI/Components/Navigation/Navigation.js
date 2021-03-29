@@ -91,19 +91,21 @@ if(isLoaded(uid)) {
     <div>
        
            <AppBar position="relative" >
-           <Toolbar style={{marginLeft: '292px'}}>
+           <Toolbar style={{marginLeft: '451px'}}>
                
                <Typography variant="h6" style={{ flexGrow: "1" }}>
                    CHA - CHING!
                </Typography>
                <ul className="nav-list" style={{listStyleType: "none", display: "flex"}}>
                    
-                  
+                    <li className="nav-list-item" style={{display: 'flex'}}>
+                    <Link to="/feedback"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Feedback</Button></Link>
+                        
+                    </li>  
+
                    <li className="nav-list-item" style={{display: 'flex'}}>
-                       
-         
-           
-                   </li>  
+                        <Link to="/about"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >About</Button></Link>
+                    </li>  
                   
                    <li className="nav-list-item" style={{display: 'flex'}}>
                        <Link to="/dashboard"  style={{ textDecoration: 'none', color: "white"  }}><Button color="inherit" >Dashboard</Button></Link>
