@@ -24,7 +24,11 @@ const AddClient = (props) => {
         template_name: '',
         template_amount: '',
         // product_service: '',
-        template_description: ''
+        template_description: '',
+        colors: {
+            rgb_code_background: '',
+            rgb_code_border: '',
+        }
         
     })
     const { uid } = useSelector((state) => state.firebase.auth);
@@ -41,13 +45,48 @@ const AddClient = (props) => {
         setTemplate(newState)
     }
 
+
+
+    //Generate random rgb color for the graphs
+    const randomColor = () => {
+        let arrBackgrounds = [0,0,0]
+        let arrBorders = [0,0,0]
+        
+        //generate the random colors and make sure they arent too dark
+        arrBackgrounds.forEach((value, index) => {
+            arrBackgrounds[index] = Math.floor(Math.random() * (Math.floor(256) - Math.ceil(100)) + Math.ceil(100));
+        })
+
+        //setting the border color to be similar but darker than the background
+        arrBackgrounds.forEach((value, index) => {
+            console.log('arrBackgrounds', arrBackgrounds)
+            console.log('arrBorders', arrBorders)
+            
+            console.log('math', Math.max(...arrBackgrounds), value)
+            if(Math.min(...arrBackgrounds) === value) {
+                arrBorders[index] = value - 25
+            }  else {
+                arrBorders[index] = value
+            }
+        })
+        return {
+    
+                rgb_code_background: "rgb(" + arrBackgrounds.join(', ') + ")",
+                rgb_code_border: "rgb(" + arrBorders.join(', ') + ")"
+        }
+    }
+
     
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
         
-        const payload = { ...template }
+        //setting the rgb code to the state before pushing to the DB
+        const newState = { ...template }
+        newState.colors = randomColor()
+        
+        const payload = { ...newState }
         // payload.id = props.clients.length + 1
         delete payload.open
         console.log("THE TEMPLATE", payload)

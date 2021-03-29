@@ -52,43 +52,30 @@ const AddClient = (props) => {
 
     //Generate random rgb color for the graphs
     const randomColor = () => {
-        let arrBackgrounds = []
+        let arrBackgrounds = [0,0,0]
         let arrBorders = [0,0,0]
-        //pick a "red" from 0 - 255
-        let r = Math.floor(Math.random() *256);
         
-        //pick and "green" from - 255
-        let g = Math.floor(Math.random() *256);
-        
-        //pick a green from 0 - 255
-        let b = Math.floor(Math.random() *256);
-        
-        arrBackgrounds.push.apply(arrBackgrounds, [r,g,b])
-
-
-        //making sure the background color is not too dark
+        //generate the random colors and make sure they arent too dark
         arrBackgrounds.forEach((value, index) => {
-            if(value < 150) {
-                arrBackgrounds[index] += 100
-            }
+            arrBackgrounds[index] = Math.floor(Math.random() * (Math.floor(256) - Math.ceil(100)) + Math.ceil(100));
         })
 
         //setting the border color to be similar but darker than the background
         arrBackgrounds.forEach((value, index) => {
             console.log('arrBackgrounds', arrBackgrounds)
+            console.log('arrBorders', arrBorders)
             
             console.log('math', Math.max(...arrBackgrounds), value)
-            if(Math.max(...arrBackgrounds) === value) {
-                arrBorders[index] = value - 50
-            } else {
+            if(Math.min(...arrBackgrounds) === value) {
+                arrBorders[index] = value - 25
+            }  else {
                 arrBorders[index] = value
             }
-            console.log('index of background', arrBorders[index])
         })
         return {
     
-                background: "rgb(" + arrBackgrounds.join(', ') + ")",
-                border: "rgb(" + arrBorders.join(', ') + ")"
+                rgb_code_background: "rgb(" + arrBackgrounds.join(', ') + ")",
+                rgb_code_border: "rgb(" + arrBorders.join(', ') + ")"
         }
     }
 
@@ -102,8 +89,7 @@ const AddClient = (props) => {
 
         //setting the rgb code to the state before pushing to the DB
         const newState = { ...client }
-        newState.colors.rgb_code_background = randomColor().background
-        newState.colors.rgb_code_border = randomColor().border
+        newState.colors = randomColor()
         
         const payload = { ...newState }
         // payload.id = props.clients.length + 1

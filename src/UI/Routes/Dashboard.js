@@ -260,7 +260,7 @@ export default function SimpleCard({ user, uid }) {
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
         <div style={open === 5 ? chartBorderStyle : chartNoBorderStyle}>
           
-          {invoices ? <ChartMainWrapper invoices={invoices} clients={clients} templates={templates}/> : <ChartNoContentWrapper/>}
+          {invoices && clients && templates ? <ChartMainWrapper invoices={invoices} clients={clients} templates={templates}/> : <ChartNoContentWrapper/>}
         </div>
       </div>
 
