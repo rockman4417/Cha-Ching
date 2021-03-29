@@ -5,12 +5,13 @@ import LineChartYears from './LineChartYears'
 import BarChartDays from './BarChartDays'
 import BarChartMonths from './BarChartMonths'
 import BarChartYears from './BarChartYears'
+import DoughnutClientDays from './DoughnutClientDays'
 import moment from 'moment'
 import { Today } from '@material-ui/icons'
 import {Button} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 
-export default function ChartMainWrapper({invoices}) {
+export default function ChartMainWrapper({invoices, clients, templates}) {
     const [timeframe, setTimeframe] = useState('days')
     const [daysInWeek, setDaysInWeek] = useState([])
     const [daysInMonth, setDaysInMonth] = useState([])
@@ -19,6 +20,7 @@ export default function ChartMainWrapper({invoices}) {
     const [totalsForMonth, setTotalsForMonth] = useState([])
     const [totalsForYear, setTotalsForYear] = useState([])
     const [graphType, setGraphType] = useState('line')
+    const [clientTotalsWeek, setClientTotalsWeek] = useState({})
 
 
 
@@ -134,6 +136,54 @@ export default function ChartMainWrapper({invoices}) {
         return totalsArray
     }
 
+    const getClientsForWeek = () => {
+        let arrDays = getDaysInWeek()
+        let total = 0
+        let arrClients = []
+        let currentClient = {}
+        let newArray = []
+        
+        Object.values(clients).forEach((client) => {
+
+            let clientObject = {
+                                id: client.clientID,
+                                name: client.first_name + ' ' + client.last_name,
+                                rgbBackground: client.colors.rgb_code_background,
+                                rgbBorder: client.colors.rgb_code_border,
+                                total: 0
+            }
+
+            arrDays.forEach((day) => {
+            
+            
+                if(day <= moment().startOf('day').valueOf()) {
+                    
+                    Object.values(invoices).forEach((invoice)=> {
+                        
+                        if(invoice.date.seconds * 1000 >= moment(day).startOf('day').valueOf() && invoice.date.seconds * 1000 <= moment(day).endOf('day').valueOf()) {
+    
+                            if(invoice.client.clientID === client.clientID) {
+                                clientObject.total += invoice.total
+                            }
+    
+                        } 
+                    })
+                    // totalsArray.push(total)
+                }   
+            })
+            if(clientObject.total !== 0) {
+                arrClients.push(clientObject)
+            }
+            
+
+
+
+        })
+        console.log('arrClients', arrClients)
+        return arrClients
+
+    }
+
     const daysFormatterWeek = (arr) => {
         let newArray = []
         arr.forEach((day) => {
@@ -158,13 +208,16 @@ export default function ChartMainWrapper({invoices}) {
 
 
       useEffect(() => {
+
+        
         setDaysInWeek(daysFormatterWeek(getDaysInWeek()))
         setDaysInMonth(daysFormatterMonth(getDaysInMonth()))
         
         setMonthsInYear(getMonthsInYear())
-        if(invoices){setTotalsForWeek(getTotalsForWeek())
+        if(invoices && clients){setTotalsForWeek(getTotalsForWeek())
                      setTotalsForMonth(getTotalsForMonth())
-                     setTotalsForYear(getTotalsForYear())}
+                     setTotalsForYear(getTotalsForYear())
+                     setClientTotalsWeek(getClientsForWeek())}
         
         
         
@@ -179,20 +232,27 @@ export default function ChartMainWrapper({invoices}) {
 
         
         
-        invoices && <div style={{marginTop: '20px'}}>
+        invoices && clients && <div style={{marginTop: '20px'}}>
                         <div className='header'>
                             <Typography variant="h4" component="h3" style={{marginBottom: '20px'}} color='primary'>
                                 PAY HISTORY
                             </Typography>
                             <div style={{display: 'flex', marginLeft: '100px'}}>
                                 {graphType === 'line' ? <div style={{marginRight: '60px'}}>
-                                                            <Button disabled variant='outlined' onClick={()=>handleGraphTypeClick('line')}>Line</Button>
+                                                            <Button  disabled variant='outlined' onClick={()=>handleGraphTypeClick('line')}>Line</Button>
                                                             <Button  onClick={()=>handleGraphTypeClick('bar')}>Bar</Button>
+                                                            <Button  onClick={()=>handleGraphTypeClick('doughnut')}>Nut</Button>
+                                                        </div>
+                                :graphType === 'bar' ? <div style={{marginRight: '60px'}}>
+                                                            <Button  onClick={()=>handleGraphTypeClick('line')}>Line</Button>
+                                                            <Button  disabled variant='outlined' onClick={()=>handleGraphTypeClick('bar')}>Bar</Button>
+                                                            <Button  onClick={()=>handleGraphTypeClick('dougnut')}>Nut</Button>
                                                         </div>
                                                       : <div style={{marginRight: '60px'}}>
                                                             <Button  onClick={()=>handleGraphTypeClick('line')}>Line</Button>
-                                                            <Button disabled variant='outlined' onClick={()=>handleGraphTypeClick('bar')}>Bar</Button>
-                                </div>}
+                                                            <Button  onClick={()=>handleGraphTypeClick('bar')}>Bar</Button>
+                                                            <Button  disabled variant='outlined' onClick={()=>handleGraphTypeClick('doughnut')}>Nut</Button>
+                                                        </div>}
                                 
                                 <div className='links' style={{marginLeft: '30px'}}>
                                         {timeframe === 'days' ? <Button style={{margin: '5px'}} color="primary" variant='outlined' onClick={()=>handleClick('days')}>This Week</Button> 
@@ -214,10 +274,11 @@ export default function ChartMainWrapper({invoices}) {
                                                 : timeframe === 'months' ? <LineChartMonths totalsForMonth={totalsForMonth} daysInMonth={daysInMonth} handleClick={handleClick}/> 
                                                 : timeframe === 'years' ? <LineChartYears totalsForYear={totalsForYear} monthsInYear={monthsInYear} handleClick={handleClick}/> 
                                                 : <div/> 
-                                              :   timeframe === 'days' ? <BarChartDays totalsForWeek={totalsForWeek} daysInWeek={daysInWeek} handleClick={handleClick}/> 
+                        : graphType === 'bar' ?   timeframe === 'days' ? <BarChartDays totalsForWeek={totalsForWeek} daysInWeek={daysInWeek} handleClick={handleClick}/> 
                                                 : timeframe === 'months' ? <BarChartMonths totalsForMonth={totalsForMonth} daysInMonth={daysInMonth} handleClick={handleClick}/> 
                                                 : timeframe === 'years' ? <BarChartYears totalsForYear={totalsForYear} monthsInYear={monthsInYear} handleClick={handleClick}/> 
-                                                : <div/>}
+                                                : <div/>
+                                              : <DoughnutClientDays clientTotalsWeek={clientTotalsWeek}/>}
 
 
                         

@@ -108,14 +108,25 @@ export default function SimpleCard({ user, uid }) {
 
   // const { displayName, uid } = useSelector((state) => state.firebase.auth);
 
-    useFirestoreConnect(
-        {
-        collection: `users/${uid}/invoices`,
-        storeAs: "invoices"
-        }
-    )
+  useFirestoreConnect([{
+        
+    collection: `users/${uid}/templates`,
+    storeAs: "templates",
+    
+  },
+  {
+    collection: `users/${uid}/clients`,
+    storeAs: "clients",
+  },
+  {
+    collection: `users/${uid}/invoices`,
+    storeAs: "invoices"
+    },
+]);
 
     const invoices = useSelector((state) => state.firestore.data.invoices);
+    const clients = useSelector((state) => state.firestore.data.clients);
+    const templates = useSelector((state) => state.firestore.data.templates);
 
 
 // if(isLoaded(invoices)) {
@@ -249,7 +260,7 @@ export default function SimpleCard({ user, uid }) {
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
         <div style={open === 5 ? chartBorderStyle : chartNoBorderStyle}>
           
-          {invoices ? <ChartMainWrapper invoices={invoices}/> : <ChartNoContentWrapper/>}
+          {invoices ? <ChartMainWrapper invoices={invoices} clients={clients} templates={templates}/> : <ChartNoContentWrapper/>}
         </div>
       </div>
 

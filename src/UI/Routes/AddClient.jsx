@@ -29,7 +29,11 @@ const AddClient = (props) => {
         zip: '',
         phone1: '',
         cell: '',
-        email: ''
+        email: '',
+        colors: {
+            rgb_code_background: '',
+            rgb_code_border: '',
+        }
     })
     const { uid } = useSelector((state) => state.firebase.auth);
     useFirestoreConnect({
@@ -45,13 +49,63 @@ const AddClient = (props) => {
         setClient(newState)
     }
 
+
+    //Generate random rgb color for the graphs
+    const randomColor = () => {
+        let arrBackgrounds = []
+        let arrBorders = [0,0,0]
+        //pick a "red" from 0 - 255
+        let r = Math.floor(Math.random() *256);
+        
+        //pick and "green" from - 255
+        let g = Math.floor(Math.random() *256);
+        
+        //pick a green from 0 - 255
+        let b = Math.floor(Math.random() *256);
+        
+        arrBackgrounds.push.apply(arrBackgrounds, [r,g,b])
+
+
+        //making sure the background color is not too dark
+        arrBackgrounds.forEach((value, index) => {
+            if(value < 150) {
+                arrBackgrounds[index] += 100
+            }
+        })
+
+        //setting the border color to be similar but darker than the background
+        arrBackgrounds.forEach((value, index) => {
+            console.log('arrBackgrounds', arrBackgrounds)
+            
+            console.log('math', Math.max(...arrBackgrounds), value)
+            if(Math.max(...arrBackgrounds) === value) {
+                arrBorders[index] = value - 50
+            } else {
+                arrBorders[index] = value
+            }
+            console.log('index of background', arrBorders[index])
+        })
+        return {
+    
+                background: "rgb(" + arrBackgrounds.join(', ') + ")",
+                border: "rgb(" + arrBorders.join(', ') + ")"
+        }
+    }
+
+
+
     
 
-
+    //Submit Client to firebase
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        //setting the rgb code to the state before pushing to the DB
+        const newState = { ...client }
+        newState.colors.rgb_code_background = randomColor().background
+        newState.colors.rgb_code_border = randomColor().border
         
-        const payload = { ...client }
+        const payload = { ...newState }
         // payload.id = props.clients.length + 1
         delete payload.open
         console.log("THE CLIENT", payload)
