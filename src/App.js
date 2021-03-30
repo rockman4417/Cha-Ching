@@ -22,6 +22,8 @@ import About from './UI/Routes/About'
 import Feedback from './UI/Routes/Feedback'
 import AddReceipt from './UI/Routes/Receipts/AddReceipt'
 import ReceiptList from './UI/Routes/Receipts/ReceiptList'
+import Footer from './UI/Components/Navigation/Footer'
+import './index.css'
 
 
 function App() {
@@ -29,9 +31,7 @@ function App() {
 
 
   return (
-    <div style = {{
-      textAlign: "center"
-    }}>
+    <div className='content'>
       <Navigation/>
       <Switch>
 
@@ -67,7 +67,7 @@ function App() {
         <Route path = "/" component={SignIn} />
         
       </Switch>
-
+      
     </div>
   );
 }

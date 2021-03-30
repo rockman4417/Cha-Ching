@@ -10,6 +10,7 @@ import { createFirestoreInstance } from "redux-firestore";
 import { rootReducer } from "./ducks/reducers";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import Footer from './UI/Components/Navigation/Footer'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCgH9UUfywPqApnt4vV7BYRLHC8-hKosfA",
@@ -45,6 +46,7 @@ ReactDOM.render(
       <ReactReduxFirebaseProvider {...rrfProps}>
         <BrowserRouter>
           <App />
+          <Footer />
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
     </Provider>
